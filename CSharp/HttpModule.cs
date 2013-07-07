@@ -9,8 +9,6 @@ namespace CruiseControl
 {
 	public class HttpModule : NancyModule
 	{
-        public static Commander _commander;
-
 		public HttpModule()
 		{
 			Get["/"] = x => "Nancy";
@@ -20,7 +18,8 @@ namespace CruiseControl
 					return ProcessCommand(postData);
 				};
 
-            _commander = new Commander();
+            if(Session["Commander"] == null)
+                Session["Commander"] = new Commander();
 		}
 
 		public string ParseRequestBody(RequestStream requestBody)
@@ -35,10 +34,16 @@ namespace CruiseControl
 		public string ProcessCommand(string parameters)
 		{
 			// Process the status
-            _commander.GetBoardStatus(JsonConvert.DeserializeObject<BoardStatus>(parameters));
-            
+            var commander = (Commander)Session["Commander"];
+
+            commander.GetBoardStatus(JsonConvert.DeserializeObject<BoardStatus>(parameters));
+
+            var commands = commander.GiveCommands();
+
+            Session["Commander"] = commander;
+
 			// Create commands to do
-            return JsonConvert.SerializeObject(_commander.GiveCommands());
+            return JsonConvert.SerializeObject(commands);
 		}
 
 	}
