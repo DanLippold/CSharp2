@@ -10,6 +10,8 @@ namespace CruiseControl
     {
         public BoardStatus _currentBoard;
 
+        private int count = 0;
+
         public Commander()
         {
             _currentBoard = new BoardStatus();
@@ -21,7 +23,7 @@ namespace CruiseControl
 
             foreach (var vessel in _currentBoard.MyVesselStatuses)
             {
-                cmds.Add(new Command { vesselid = vessel.Id, action = "move:north" });
+                cmds.Add(new Command { vesselid = vessel.Id, action = "move:north", coordinate = new Coordinate { X = count, Y = count } });
             }
 
             return cmds;
@@ -29,6 +31,7 @@ namespace CruiseControl
 
         public void GetBoardStatus(BoardStatus board)
         {
+            count++;
             _currentBoard = board;
         }
     }

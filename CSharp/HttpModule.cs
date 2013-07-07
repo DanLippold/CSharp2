@@ -9,7 +9,7 @@ namespace CruiseControl
 {
 	public class HttpModule : NancyModule
 	{
-        public Commander _commander;
+        public static Commander _commander;
 
 		public HttpModule()
 		{
