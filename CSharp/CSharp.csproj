@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commander.cs" />
+    <Compile Include="CustomBootstrapper.cs" />
     <Compile Include="Enums\PowerUpType.cs" />
     <Compile Include="HttpModule.cs" />
     <Compile Include="Models\BoardStatus.cs" />
