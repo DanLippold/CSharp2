@@ -16,28 +16,27 @@ namespace CruiseControl
 			Get["/"] = x => "Nancy";
 			Post["/Command"] = x =>
 				{
-					var postData = ParseRequestBody(Request.Body);
-					return ProcessCommand(postData);
+                    return ProcessData(Request.Body);
 				};
 
             _commander = commander;
 		}
 
-		public string ParseRequestBody(RequestStream requestBody)
+        public string ProcessData(RequestStream requestBody)
 		{
-			var length = int.Parse(requestBody.Length.ToString());
-			var bytes = new byte[length];
-			requestBody.Read(bytes, 0, length);
+            var length = int.Parse(requestBody.Length.ToString());
+            var bytes = new byte[length];
+            requestBody.Read(bytes, 0, length);
+            var json = System.Text.Encoding.UTF8.GetString(bytes);
+            // Process the status
+            var board = JsonConvert.DeserializeObject<BoardStatus>(json);
 
-			return System.Text.Encoding.UTF8.GetString(bytes);
-		}
+            if (board.RoundNumber == 0)
+                _commander = new Commander();
 
-		public string ProcessCommand(string parameters)
-		{
-			// Process the status
-            _commander.GetBoardStatus(JsonConvert.DeserializeObject<BoardStatus>(parameters));
-            
-			// Create commands to do
+            _commander.GetBoardStatus(board);
+
+            // Create commands to do
             return JsonConvert.SerializeObject(_commander.GiveCommands());
 		}
 

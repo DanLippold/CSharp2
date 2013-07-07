@@ -9,6 +9,7 @@ namespace CruiseControl.Models
     public class BoardStatus
     {
         // Board properties
+        public int RoundNumber { get; set; }
         public VesselStatus[] VesselStatuses { get; set; }
         public Coordinate[] ReportedDamageCoordinates { get; set; }
         public Coordinate[] PowerUpCoordinates { get; set; }
