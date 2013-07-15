@@ -54,9 +54,14 @@ namespace CruiseControl
             }
         }
 
+        // Do not alter/remove this method signature
         public List<Command> GiveCommands()
         {
             var cmds = new List<Command>();
+
+            // Add Commands Here.
+            // You can only give as many commands as you have un-sunk vessels. Powerup commands do not count against this number. 
+            // You are free to use as many powerup commands at any time. Any additional commands you give (past the number of active vessels) will be ignored.
 
             foreach (var vessel in _currentBoard.MyVesselStatuses)
             {
@@ -71,6 +76,7 @@ namespace CruiseControl
             return cmds;
         }
 
+        // Do NOT modify or remove! This is where you will receive the new board status after each round.
         public void GetBoardStatus(BoardStatus board)
         {
             _currentBoard = board;
