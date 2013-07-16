@@ -32,7 +32,7 @@ namespace CruiseControl
             var board = JsonConvert.DeserializeObject<BoardStatus>(json);
 
             if (board.RoundNumber == 0)
-                _commander = new Commander();// We need to clear persistent memory
+                this.Session.DeleteAll();// We need to clear persistent memory
 
             _commander.GetBoardStatus(board);
 
