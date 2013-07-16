@@ -11,6 +11,7 @@ namespace CruiseControl
         public BoardStatus _currentBoard;
 
         private Random _randomGenerator;
+        private int count;
 
         public Commander()
         {
@@ -66,13 +67,15 @@ namespace CruiseControl
             foreach (var vessel in _currentBoard.MyVesselStatuses)
             {
                 if (vessel.SonarReport.Any())
-                    cmds.Add(new Command { vesselid = vessel.Id, action = "fire", coordinate = new Coordinate { X = vessel.SonarReport[0].X, Y = vessel.SonarReport[0].Y } });
+                    //cmds.Add(new Command { vesselid = vessel.Id, action = "fire", coordinate = new Coordinate { X = vessel.SonarReport[0].X, Y = vessel.SonarReport[0].Y } });
+                    cmds.Add(new Command { vesselid = vessel.Id, action = "fire", coordinate = new Coordinate { X = count, Y = count } });
                 else if (TooCloseToEdge(vessel))
                     cmds.Add(new Command { vesselid = vessel.Id, action = "move:" + GetOppositeDirectionFromClosestEdge(vessel) });
                 else
                     cmds.Add(new Command { vesselid = vessel.Id, action = "move:" + GetRandomMovementDirection() });
             }
 
+            count++;
             return cmds;
         }
 
