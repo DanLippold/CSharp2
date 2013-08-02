@@ -86,6 +86,8 @@
     <Compile Include="Models\BoardStatus.cs" />
     <Compile Include="Models\Command.cs" />
     <Compile Include="Models\Coordinate.cs" />
+    <Compile Include="Models\TeamVesselInformation.cs" />
+    <Compile Include="Models\Truce.cs" />
     <Compile Include="Models\VesselStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

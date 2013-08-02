@@ -23,6 +23,7 @@ namespace CruiseControl.Models
         public int CollisionPointsGiven { get; set; }
         public int CollisionPointsReceived { get; set; }
         public int MissileRange { get; set; }
+        public int SonarRange { get; set; }
         public int CounterMeasures { get; set; }
         public int MovesUntilRepair { get; set; }
         public bool CounterMeasuresLoaded { get; set; }

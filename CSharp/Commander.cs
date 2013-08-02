@@ -11,7 +11,6 @@ namespace CruiseControl
         public BoardStatus _currentBoard;
 
         private Random _randomGenerator;
-        private int count;
 
         public Commander()
         {
@@ -31,12 +30,11 @@ namespace CruiseControl
         {
             if (vessel.Location.Any(c => c.X == _currentBoard.BoardMinCoordinate.X + 1))
                 return "east";
-            else if (vessel.Location.Any(c => c.Y == _currentBoard.BoardMinCoordinate.Y + 1))
+            if (vessel.Location.Any(c => c.Y == _currentBoard.BoardMinCoordinate.Y + 1))
                 return "south";
-            else if (vessel.Location.Any(c => c.X == _currentBoard.BoardMaxCoordinate.X - 1))
+            if (vessel.Location.Any(c => c.X == _currentBoard.BoardMaxCoordinate.X - 1))
                 return "west";
-            else
-                return "east";
+            return "east";
         }
 
         private string GetRandomMovementDirection()
@@ -67,15 +65,13 @@ namespace CruiseControl
             foreach (var vessel in _currentBoard.MyVesselStatuses)
             {
                 if (vessel.SonarReport.Any())
-                    //cmds.Add(new Command { vesselid = vessel.Id, action = "fire", coordinate = new Coordinate { X = vessel.SonarReport[0].X, Y = vessel.SonarReport[0].Y } });
-                    cmds.Add(new Command { vesselid = vessel.Id, action = "fire", coordinate = new Coordinate { X = count, Y = count } });
+                    cmds.Add(new Command { vesselid = vessel.Id, action = "fire", coordinate = new Coordinate { X = vessel.SonarReport[0].X, Y = vessel.SonarReport[0].Y } });
                 else if (TooCloseToEdge(vessel))
                     cmds.Add(new Command { vesselid = vessel.Id, action = "move:" + GetOppositeDirectionFromClosestEdge(vessel) });
                 else
                     cmds.Add(new Command { vesselid = vessel.Id, action = "move:" + GetRandomMovementDirection() });
             }
 
-            count++;
             return cmds;
         }
 
