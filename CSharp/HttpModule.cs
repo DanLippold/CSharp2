@@ -31,8 +31,7 @@ namespace CruiseControl
             // Process the status
             var board = JsonConvert.DeserializeObject<BoardStatus>(json);
 
-            if (board.RoundNumber == 0)
-                // We need to clear persistent memory
+            if (board.RoundNumber == 0) _commander.Reset(); 
 
             _commander.GetBoardStatus(board);
 

@@ -80,5 +80,11 @@ namespace CruiseControl
         {
             _currentBoard = board;
         }
+
+        // This method runs at the start of a new game, do any initialization or resetting here 
+        public void Reset()
+        {
+
+        }
     }
 }
